@@ -17,10 +17,10 @@
             var result1 = (-numB+(numB**2-4*numA*numC)**(1/2))/(2*numA)
             var result2 = (-numB-(numB**2-4*numA*numC)**(1/2))/(2*numA) 
             if (numA==1){
-                document.write("<br>The solutions of x<sup>2</sup>+"+ numB + "x+" + c + "=0 are x = " + parseFloat(result1)+" and x = "+ parseFloat(result2))
+                document.write("<br>The solutions of x<sup>2</sup>+"+ numB + "x+" + c + "=0 are x = " + parseFloat(result1).toFixed(3)+" and x = "+ parseFloat(result2).toFixed(3))
             }
             else {
-                document.write("<br>The solutions of " + numA +"x<sup>2</sup>+"+ numB + "x+" + c + "=0 are x = " + parseFloat(result1)+" and x = "+ parseFloat(result2)) 
+                document.write("<br>The solutions of " + numA +"x<sup>2</sup>+"+ numB + "x+" + c + "=0 are x = " + parseFloat(result1).toFixed(3)+" and x = "+ parseFloat(result2).toFixed(3)) 
             }
         </script>    
     </body>
