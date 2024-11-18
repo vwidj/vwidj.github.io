@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite number</title>
+</head>
+<body>
+    <script>
+        var count = 0
+        var fav = Math.floor(Math.random()*100)
+        while (count<3) {
+            var num = parseInt(prompt("Guess my favorite number"))
+            if (num === fav){
+                document.write("Congrats, you are correct. My favorite number is " + fav)
+                break
+            }
+            else if (num>fav){
+                    alert("Number is too big")
+            }
+            else {
+                alert("Number is too small")
+            count++
+            }
+        }
+
+        if (count===3 && num!== fav){
+            document.write("You failed")
+        }
+    </script>
+</body>
+</html>
