@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <!-- External CSS for Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Global styles for the body */
+        body {
+            background-color: rgb(0, 0, 0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Title for the menu */
+        .menu-title {
+            color: white;
+            font-size: 32px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Category styles */
+        .category {
+            width: 80%;
+            margin-bottom: 40px;
+        }
+
+        /* Heading for each category */
+        .category h2 {
+            color: #f5d742;
+            font-size: 36px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Styling for the product container */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        /* Product card styling */
+        .product {
+            background-color: rgb(34, 34, 34);
+            width: 250px;
+            border: 1px solid #b89369;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover effect for the product card */
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Product image styling */
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Product name styling */
+        .product h3 {
+            color: #f5d742;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* Product price styling */
+        .product p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 5px;
+        }
+
+        /* Styling for the "Add to Cart" button */
+        .add-to-cart {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for "Add to Cart" button */
+        .add-to-cart:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Cart icon styling */
+        .cart-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            background-color: #27ae60;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for cart icon */
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Cart container styling */
+        .cart-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            background-color: #343434;
+            box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Cart container open state */
+        .cart-container.open {
+            display: flex;
+        }
+
+        /* Close cart button styling */
+        .close-cart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Hover effect for close button */
+        .close-cart:hover {
+            color: red;
+        }
+
+        /* Cart item styling */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        /* Cart item name styling */
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        /* Cart item price styling */
+        .cart-item-price {
+            color: #2ecc71;
+        }
+
+        /* Remove item button styling */
+        .remove-item {
+            font-size: large;
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Cart total styling */
+        .cart-total {
+            color: #f5d742;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Cart icon with count styling */
+        .cart-icon .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 14px;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        /* WhatsApp button styling */
+        #whatsappButton {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for WhatsApp button */
+        #whatsappButton:hover {
+            background-color: #128C7E;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page title -->
+    <h1 class="menu-title">Menu</h1>
+
+    <!-- Product list container -->
+    <div class="product-container" id="productList"></div>
+
+    <!-- Cart icon that toggles cart visibility -->
+    <i class="fas fa-shopping-cart cart-icon" id="cartIcon">
+        <span class="cart-count" id="cartCount">0</span>
+    </i>
+
+    <!-- Cart container, hidden by default, displays items in the cart -->
+    <div class="cart-container" id="cartContainer">
+        <button class="close-cart" id="closeCart">X</button>
+        <h2 style="color:#ffffff">Your Cart</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal">Total: $0.00</div>
+        
+        <!-- Button to send cart via WhatsApp -->
+        <button id="whatsappButton">Send via WhatsApp</button>
+    </div>
+
+    <script>
+        // Initialize empty cart
+        let cart = [];
+
+        // Function to update cart display
+        function updateCart() {
+            const cartItemsContainer = document.getElementById("cartItems");
+            const cartTotal = document.getElementById("cartTotal");
+            const cartCount = document.getElementById("cartCount");
+
+            cartItemsContainer.innerHTML = ""; // Clear cart items
+            let total = 0;
+
+            // Loop through cart items and display them
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                cartItem.innerHTML = `
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-price">$${item.price}</span>
+                    <span class="remove-item" onclick="removeItem(${index})">-</span>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+                total += item.price;  // Add item price to total
+            });
+
+            // Update total price and cart item count
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+            cartCount.textContent = cart.length; // Update cart item count
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            cart.splice(index, 1);  // Remove item from cart
+            updateCart();  // Update cart display
+        }
+
+        // Function to display products on the page
+        function displayProducts(products) {
+            const container = document.getElementById("productList");
+            container.innerHTML = "";  // Clear existing products
+
+            // Group products by category
+            const categories = {};
+            products.forEach(product => {
+                if (!categories[product.category]) {
+                    categories[product.category] = [];
+                }
+                categories[product.category].push(product);
+            });
+
+            // Loop through categories and display products
+            for (const category in categories) {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.classList.add("category");
+
+                const categoryTitle = document.createElement("h2");
+                categoryTitle.textContent = category;
+                categoryDiv.appendChild(categoryTitle);
+
+                const productContainer = document.createElement("div");
+                productContainer.classList.add("product-container");
+
+                categories[category].forEach(product => {
+                    const productDiv = document.createElement("div");
+                    productDiv.classList.add("product");
+
+                    let productHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="price">$${product.price}</p>
+                    `;
+
+                    productDiv.innerHTML = productHTML;
+
+                    // Add to cart button for each product
+                    const addButton = document.createElement("button");
+                    addButton.classList.add("add-to-cart");
+                    addButton.textContent = "Add to Cart";
+                    addButton.onclick = function() {
+                        const selectedProduct = {
+                            name: product.name,
+                            price: product.price,
+                        };
+                        cart.push(selectedProduct);  // Add product to cart
+                        updateCart();  // Update cart display
+                    };
+                    productDiv.appendChild(addButton);
+
+                    productContainer.appendChild(productDiv);
+                });
+
+                categoryDiv.appendChild(productContainer);
+                container.appendChild(categoryDiv);
+            }
+        }
+
+        // WhatsApp button functionality
+        document.getElementById("whatsappButton").addEventListener("click", () => {
+            let message = "Here's my cart:\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                message += `${item.name} - $${item.price}\n`;
+                total += item.price;
+            });
+
+            message += `\nTotal: $${total.toFixed(2)}`;
+
+            const phoneNumber = "6282362069716"; // WhatsApp number
+
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappUrl, "_blank");  // Open WhatsApp with the message
+        });
+
+        // Toggle cart visibility
+        document.getElementById("cartIcon").addEventListener("click", () => {
+            const cartContainer = document.getElementById("cartContainer");
+            cartContainer.classList.toggle("open");  // Toggle cart visibility
+        });
+
+        // Close cart when the "X" button is clicked
+        document.getElementById("closeCart").addEventListener("click", () => {
+            const cartContainer = document.getElementById("cartContainer");
+            cartContainer.classList.remove("open");  // Close the cart
+        });
+
+        // Fetch and display products from the API
+        fetch('https://679f306224322f8329c3052e.mockapi.io/api/products')
+            .then(res => res.json())
+            .then(displayProducts)
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+
+</body>
+</html>
